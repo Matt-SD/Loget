@@ -24,6 +24,7 @@
    background: #F0F0F0;
    border-radius: 5px;
   }
+  .post h3 { color: #00F; }
   p.info { color: #888; }
   .entry {
    padding: 5px;
@@ -37,7 +38,7 @@
 <div id="content">
 <?php foreach($posts as $post): ?>
  <div class="post" id="post-<?php echo $post['id']; ?>">
-  <h3><a href="./?view=<?php echo $post['slug']; ?>&id=<?php echo $post['id']; ?>"><?php echo $post['title']; ?></a></h3>
+  <h3><?php echo $post['title']; ?></h3>
   <p class="info">Posted <?php echo date($config['dateformat'],$post['timestamp']); ?></p>
   <div class="entry">
    <?php echo $post['content']; ?>
