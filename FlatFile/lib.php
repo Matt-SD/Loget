@@ -14,7 +14,7 @@ function XML2Arr($xml,$recursive=false) {
     if(isset($value[0])) {
       $newArray[$key] = trim($value[0]);
     } else {
-      $newArray[$key][] = XML2Array($value,true);
+      $newArray[$key][] = XML2Arr($value,true);
     }
   }
   return $newArray;
@@ -31,12 +31,23 @@ function loadArchive() {
   foreach($arr as $k => $v) {
     $xml = file_get_contents("./archive/{$v}");
     $entry = XML2Arr($xml);
+    $entry['content'] = processHTML($entry['content']);
     $archive[$entry['id']] = $entry;
   }
+  
+  /* The next 3 lines were a comment on the PHP.net manual */
+  $tmp = Array();
+  foreach($archive as &$ma) { $tmp[] = &$ma["timestamp"]; }
+  array_multisort($tmp, $archive);
+  
   /* Reverse it so that the highest ID is first */
   $archive = array_reverse($archive);
   
   return $archive;
+}
+
+function processHTML($content) {
+  return str_replace(array('{{','}}'),array('<','>'),$content);
 }
 
 /* The dispatch function */
