@@ -31,7 +31,7 @@ function loadArchive() {
   foreach($arr as $k => $v) {
     $xml = file_get_contents("./archive/{$v}");
     $entry = XML2Arr($xml);
-    $entry['content'] = processHTML($entry['content']);
+    $entry['entry'] = processHTML($entry['entry']);
     $archive[$entry['id']] = $entry;
   }
   
